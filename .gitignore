@@ -1,0 +1,8 @@
+# Local scratch & preview scripts
+serve_preview.js
+take_screenshot.js
+render_cards.js
+render_stats.js
+render_streak.js
+node_modules/
+*.log

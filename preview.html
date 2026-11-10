@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub Profile Preview — GOD-SP3LL (Mohammad Hashir)</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --border: #30363d;
+      --card-bg: #161b22;
+      --text: #e6edf3;
+      --text-muted: #848d97;
+      --link: #2f55ff;
+      --btn-bg: #21262d;
+      --btn-border: #363b42;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    }
+
+    body.light-theme {
+      --bg: #ffffff;
+      --border: #d0d7de;
+      --card-bg: #f6f8fa;
+      --text: #1f2328;
+      --text-muted: #656d76;
+      --btn-bg: #f3f4f6;
+      --btn-border: #d0d7de;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      line-height: 1.5;
+      padding-bottom: 60px;
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+
+    /* Top Control Bar */
+    .top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(13, 17, 23, 0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    body.light-theme .top-bar {
+      background: rgba(255, 255, 255, 0.9);
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      color: #58a6ff;
+      background: rgba(47, 85, 255, 0.12);
+      border: 1px solid rgba(47, 85, 255, 0.3);
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #2f55ff;
+      box-shadow: 0 0 8px #2f55ff;
+    }
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      background: var(--btn-bg);
+      color: var(--text);
+      border: 1px solid var(--btn-border);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+    .btn:hover {
+      border-color: #8b949e;
+      background: #30363d;
+    }
+    body.light-theme .btn:hover {
+      background: #e5e7eb;
+    }
+    .btn.active {
+      background: #2f55ff;
+      border-color: #2f55ff;
+      color: #ffffff;
+    }
+
+    /* Container Layout */
+    .container {
+      max-width: 1280px;
+      margin: 32px auto;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: 296px 1fr;
+      gap: 32px;
+    }
+    @media (max-width: 900px) {
+      .container { grid-template-columns: 1fr; }
+    }
+
+    /* GitHub Sidebar simulation */
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .avatar-wrap {
+      position: relative;
+      width: 100%;
+      padding-top: 100%;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: #161b22;
+    }
+    .avatar-img {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    .user-names h1 {
+      font-size: 24px;
+      font-weight: 600;
+      line-height: 1.25;
+    }
+    .user-names p {
+      font-size: 20px;
+      font-weight: 300;
+      color: var(--text-muted);
+    }
+    .bio {
+      font-size: 14px;
+      color: var(--text);
+    }
+    .meta-list {
+      list-style: none;
+      font-size: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      color: var(--text-muted);
+    }
+    .meta-list a {
+      color: var(--text);
+      text-decoration: none;
+    }
+    .meta-list a:hover {
+      color: var(--link);
+      text-decoration: underline;
+    }
+
+    /* Profile Main Column */
+    .main-col {
+      min-width: 0;
+    }
+    .readme-box {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--card-bg);
+      overflow: hidden;
+    }
+    .readme-header {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--text-muted);
+    }
+    .readme-header span {
+      font-family: var(--font-mono);
+      color: var(--text);
+      font-size: 13px;
+    }
+    .readme-content {
+      padding: 24px;
+      background: transparent;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Cards Presentation */
+    .card-row {
+      width: 100%;
+      max-width: 880px;
+      margin-bottom: 0px;
+      line-height: 0;
+    }
+    .card-row img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    .three-card-row {
+      width: 100%;
+      max-width: 880px;
+      display: flex;
+      justify-content: space-between;
+      line-height: 0;
+    }
+    .three-card-row a {
+      width: 33.333%;
+      display: block;
+      line-height: 0;
+    }
+    .three-card-row img {
+      width: 100%;
+      height: auto;
+      display: block;
+      line-height: 0;
+    }
+
+    .footer-links {
+      margin-top: 24px;
+      font-size: 14px;
+      font-family: var(--font-mono);
+      text-align: center;
+      color: var(--text-muted);
+    }
+    .footer-links a {
+      color: var(--link);
+      text-decoration: none;
+    }
+    .footer-links a:hover {
+      text-decoration: underline;
+    }
+
+    /* Tabs for extra views */
+    .view-tabs {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 12px;
+    }
+    .tab-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 14px;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .tab-btn.active {
+      color: var(--text);
+      background: var(--btn-bg);
+    }
+    .tab-panel {
+      display: none;
+      max-width: 1280px;
+      margin: 32px auto;
+      padding: 0 24px;
+    }
+    .tab-panel.active {
+      display: block;
+    }
+
+    .terminal-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    @media (max-width: 900px) {
+      .terminal-grid { grid-template-columns: 1fr; }
+    }
+    .terminal-card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      background: #0d1117;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    }
+    .terminal-card img {
+      width: 100%;
+      display: block;
+    }
+
+    .reduced-motion .r, .reduced-motion .f, .reduced-motion .g, .reduced-motion .p,
+    .reduced-motion .live, .reduced-motion .n, .reduced-motion .nu, .reduced-motion .ti,
+    .reduced-motion .sl, .reduced-motion .ai, .reduced-motion .ro, .reduced-motion .rg {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+    .reduced-motion .sh { display: none !important; }
+  </style>
+</head>
+<body>
+
+  <!-- Top Controller Bar -->
+  <div class="top-bar">
+    <div style="display: flex; align-items: center; gap: 14px;">
+      <span class="badge"><span class="dot"></span> LIVE GITHUB PROFILE PREVIEW</span>
+      <span style="font-size: 13px; color: var(--text-muted); font-family: var(--font-mono);">GOD-SP3LL / README.md</span>
+    </div>
+    <div class="controls">
+      <button class="btn" id="replayBtn" title="Replay all SVG animations from beginning">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/></svg>
+        Replay Animations
+      </button>
+      <button class="btn" id="staticToggleBtn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        Static Mode
+      </button>
+      <button class="btn" id="themeToggleBtn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        Dark / Light
+      </button>
+    </div>
+  </div>
+
+  <!-- Navigation Tabs -->
+  <div class="view-tabs">
+    <button class="tab-btn active" onclick="switchTab('profile')">GitHub Profile View</button>
+    <button class="tab-btn" onclick="switchTab('terminals')">Terminal Sidecars (ASCII & Stats)</button>
+    <button class="tab-btn" onclick="switchTab('comparison')">Design Comparison vs Reference</button>
+  </div>
+
+  <!-- TAB 1: Profile View -->
+  <div id="tab-profile" class="tab-panel active">
+    <div class="container">
+      <!-- Sidebar simulation -->
+      <aside class="sidebar">
+        <div class="avatar-wrap">
+          <img src="source-photo.png" alt="Mohammad Hashir" class="avatar-img" />
+        </div>
+        <div class="user-names">
+          <h1>Mohammad Hashir</h1>
+          <p>GOD-SP3LL</p>
+        </div>
+        <p class="bio">
+          Aspiring Network Security Engineer. B.Tech CSE Graduate. Cisco CCNA & CCNP Security candidate.
+        </p>
+        <ul class="meta-list">
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: text-bottom; margin-right: 4px;"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+            <a href="https://mohdhashir.vercel.app" target="_blank">mohdhashir.vercel.app</a>
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: text-bottom; margin-right: 4px;"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            <a href="https://instagram.com/hashir_k.m" target="_blank">@hashir_k.m</a>
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: text-bottom; margin-right: 4px;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <a href="mailto:mohdhashirkm@gmail.com">mohdhashirkm@gmail.com</a>
+          </li>
+        </ul>
+      </aside>
+
+      <!-- Main README View -->
+      <main class="main-col">
+        <div class="readme-box">
+          <div class="readme-header">
+            <span>GOD-SP3LL / README.md</span>
+            <span style="font-size: 12px; color: var(--text-muted);">Refreshed automatically</span>
+          </div>
+
+          <div class="readme-content" id="readmeContent">
+            <!-- Row 1: Hero -->
+            <div class="card-row">
+              <a href="https://mohdhashir.vercel.app"><img src="./cards/hero.svg" alt="Mohammad Hashir hero" /></a>
+            </div>
+
+            <!-- Row 2: Heatmap in blue -->
+            <div class="card-row">
+              <img src="./cards/heatmap.svg" alt="Hashir's contribution graph in blue" />
+            </div>
+
+            <!-- Row 3: Activity & streaks -->
+            <div class="card-row">
+              <img src="./cards/activity.svg" alt="Activity in the last 12 months" />
+            </div>
+
+            <!-- Row 4: Three world tiles -->
+            <div class="three-card-row">
+              <a href="https://mohdhashir.vercel.app"><img src="./cards/build.svg" alt="DEFENSE: 100% Zero-Trust" /></a>
+              <a href="https://mohdhashir.vercel.app"><img src="./cards/brand.svg" alt="CERTS: 2 Cisco Certs" /></a>
+              <a href="https://mohdhashir.vercel.app"><img src="./cards/learn.svg" alt="PACKETS: 24/7 Monitoring" /></a>
+            </div>
+
+            <!-- Row 5: Coding section title (Dark/Light picture) -->
+            <div class="card-row" style="margin-top: 6px;">
+              <picture>
+                <source media="(prefers-color-scheme: dark)" srcset="./cards/title-coding-dark.svg" id="titlePicDark" />
+                <img src="./cards/title-coding-dark.svg" id="titlePicImg" alt="What I'm coding" />
+              </picture>
+            </div>
+
+            <!-- Row 6: Three repo cards -->
+            <div class="three-card-row">
+              <a href="https://github.com/GOD-SP3LL/portifolio"><img src="./cards/repo-portifolio.svg" alt="portifolio" /></a>
+              <a href="https://github.com/GOD-SP3LL"><img src="./cards/repo-enterprise-ipsec-vpn.svg" alt="enterprise-ipsec-vpn" /></a>
+              <a href="https://github.com/GOD-SP3LL"><img src="./cards/repo-bgp-route-optimizer.svg" alt="bgp-route-optimizer" /></a>
+            </div>
+
+            <!-- Footer links -->
+            <div class="footer-links">
+              <a href="https://mohdhashir.vercel.app">mohdhashir.vercel.app</a> &nbsp;/&nbsp;
+              <a href="https://github.com/GOD-SP3LL">github</a> &nbsp;/&nbsp;
+              <a href="https://instagram.com/hashir_k.m">instagram</a> &nbsp;/&nbsp;
+              <a href="mailto:mohdhashirkm@gmail.com">email</a>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- TAB 2: Terminal Sidecars -->
+  <div id="tab-terminals" class="tab-panel">
+    <div style="text-align: center; max-width: 800px; margin: 0 auto 28px;">
+      <h2 style="font-size: 24px; margin-bottom: 8px;">Full Terminal Sidecar SVGs</h2>
+      <p style="color: var(--text-muted); font-size: 14px;">
+        Matching the 840x880 terminal window dimensions from the reference, these standalone SVGs power the ASCII typewriter animation and the live counting stats tiles.
+      </p>
+    </div>
+    <div class="terminal-grid">
+      <div class="terminal-card">
+        <div style="padding: 12px 16px; border-bottom: 1px solid var(--border); font-family: var(--font-mono); font-size: 13px; color: var(--text-muted);">
+          hashir-ascii.svg (Monochrome Terminal Portrait)
+        </div>
+        <img src="hashir-ascii.svg" alt="hashir-ascii.svg" />
+      </div>
+      <div class="terminal-card">
+        <div style="padding: 12px 16px; border-bottom: 1px solid var(--border); font-family: var(--font-mono); font-size: 13px; color: var(--text-muted);">
+          stats.svg (Counting Stats Tiles & Monthly Bars)
+        </div>
+        <img src="stats.svg" alt="stats.svg" />
+      </div>
+    </div>
+    <div style="max-width: 840px; margin: 32px auto 0;" class="terminal-card">
+      <div style="padding: 12px 16px; border-bottom: 1px solid var(--border); font-family: var(--font-mono); font-size: 13px; color: var(--text-muted);">
+        contrib-heatmap.svg (GitHub Streak Heatmap)
+      </div>
+      <img src="contrib-heatmap.svg" alt="contrib-heatmap.svg" />
+    </div>
+  </div>
+
+  <!-- TAB 3: Comparison -->
+  <div id="tab-comparison" class="tab-panel">
+    <div style="text-align: center; max-width: 840px; margin: 0 auto 32px;">
+      <h2 style="font-size: 24px; margin-bottom: 8px;">Visual Specification & Implementation Alignment</h2>
+      <p style="color: var(--text-muted); font-size: 14px;">
+        Direct mapping between reference elements (<a href="https://github.com/AviVashishta29" target="_blank" style="color: var(--link);">AviVashishta29</a>) and Hashir's production profile (<a href="https://github.com/GOD-SP3LL" target="_blank" style="color: var(--link);">GOD-SP3LL</a>).
+      </p>
+    </div>
+
+    <div style="max-width: 900px; margin: 0 auto; background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 24px;">
+      <table style="width: 100%; border-collapse: collapse; font-size: 14px; text-align: left;">
+        <thead>
+          <tr style="border-bottom: 1px solid var(--border); color: var(--text-muted);">
+            <th style="padding: 10px 14px;">Component / Feature</th>
+            <th style="padding: 10px 14px;">Reference (AviVashishta29)</th>
+            <th style="padding: 10px 14px;">Implementation (GOD-SP3LL)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 12px 14px; font-weight: 600;">Hero Typography</td>
+            <td style="padding: 12px 14px;">Avi Vashishta (Instrument Serif)</td>
+            <td style="padding: 12px 14px; color: #58a6ff;">Mohammad Hashir (Instrument Serif)</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 12px 14px; font-weight: 600;">Shine Animation</td>
+            <td style="padding: 12px 14px;">Blue gradient translate across "Vashishta"</td>
+            <td style="padding: 12px 14px; color: #58a6ff;">Blue gradient translate across "Hashir" (7s sweep)</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 12px 14px; font-weight: 600;">ASCII Portrait</td>
+            <td style="padding: 12px 14px;">Typewriter scan of Avi illustration</td>
+            <td style="padding: 12px 14px; color: #58a6ff;">Typewriter scan of Hashir's genuine portrait</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 12px 14px; font-weight: 600;">Hero Badge & Role</td>
+            <td style="padding: 12px 14px;">FULLSTACK ENGINEER AT DOCK</td>
+            <td style="padding: 12px 14px; color: #58a6ff;">ASPIRING NETWORK SECURITY ENGINEER</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 12px 14px; font-weight: 600;">Contribution Heatmap</td>
+            <td style="padding: 12px 14px;">53-wk blue matrix with pop animations</td>
+            <td style="padding: 12px 14px; color: #58a6ff;">53-wk blue matrix populated with GOD-SP3LL real data</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 12px 14px; font-weight: 600;">Activity & Streaks</td>
+            <td style="padding: 12px 14px;">12-month growing bars + streak stats</td>
+            <td style="padding: 12px 14px; color: #58a6ff;">12-month real commit history, streak length & best day</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 12px 14px; font-weight: 600;">World Tiles (3-pack)</td>
+            <td style="padding: 12px 14px;">BUILD (Blue), BRAND (Red), LEARN (Yellow)</td>
+            <td style="padding: 12px 14px; color: #58a6ff;">DEFENSE (Blue), CERTS (Red), PACKETS (Yellow)</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 12px 14px; font-weight: 600;">Tile Animations</td>
+            <td style="padding: 12px 14px;">Tilt-in, radar ring, glint sheen, SMIL count-up</td>
+            <td style="padding: 12px 14px; color: #58a6ff;">Identical cubic-bezier physics, glint, & count-up</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 12px 14px; font-weight: 600;">Featured Repos</td>
+            <td style="padding: 12px 14px;">website-to-code, india-protest-map, learning-agent</td>
+            <td style="padding: 12px 14px; color: #58a6ff;">portifolio, enterprise-ipsec-vpn, bgp-route-optimizer</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 12px 14px; font-weight: 600;">Automation</td>
+            <td style="padding: 12px 14px;">Daily 06:17 UTC GitHub Action</td>
+            <td style="padding: 12px 14px; color: #58a6ff;">Daily 06:17 UTC GitHub Action with auto-commit</td>
+          </tr>
+          <tr>
+            <td style="padding: 12px 14px; font-weight: 600;">Accessibility</td>
+            <td style="padding: 12px 14px;">prefers-reduced-motion + STATIC mode</td>
+            <td style="padding: 12px 14px; color: #58a6ff;">Embedded media query and STATIC rendering toggle</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    // Tab switching
+    function switchTab(name) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      event.target.classList.add('active');
+      document.getElementById('tab-' + name).classList.add('active');
+    }
+
+    // Replay Animations
+    const replayBtn = document.getElementById('replayBtn');
+    replayBtn.addEventListener('click', () => {
+      const imgs = document.querySelectorAll('#readmeContent img, .terminal-card img');
+      imgs.forEach(img => {
+        const src = img.src.split('?')[0];
+        img.src = src + '?t=' + Date.now();
+      });
+    });
+
+    // Static Mode Toggle
+    let isStatic = false;
+    const staticToggleBtn = document.getElementById('staticToggleBtn');
+    staticToggleBtn.addEventListener('click', () => {
+      isStatic = !isStatic;
+      staticToggleBtn.classList.toggle('active', isStatic);
+      document.body.classList.toggle('reduced-motion', isStatic);
+      staticToggleBtn.innerHTML = isStatic
+        ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg> Static Mode: ON'
+        : '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Static Mode';
+    });
+
+    // Dark / Light Theme Toggle
+    let isDark = true;
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    themeToggleBtn.addEventListener('click', () => {
+      isDark = !isDark;
+      document.body.classList.toggle('light-theme', !isDark);
+      const titleImg = document.getElementById('titlePicImg');
+      if (titleImg) {
+        titleImg.src = isDark ? './cards/title-coding-dark.svg' : './cards/title-coding-light.svg';
+      }
+    });
+  </script>
+</body>
+</html>
