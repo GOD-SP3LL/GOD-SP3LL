@@ -6,7 +6,7 @@
 <a href="https://mohdhashir.vercel.app"><img src="./cards/hero.svg" width="100%" alt="Mohammad Hashir. Aspiring Network Security Engineer. Securing networks, engineering zero-trust architectures, and building resilient defense-in-depth systems." /></a><br>
 <img src="./cards/heatmap.svg" width="100%" alt="Hashir's contribution graph, in blue, refreshed daily" /><br>
 <img src="./cards/activity.svg" width="100%" alt="Contributions in the last 12 months, by month, with streak and busiest day" /><br>
-<a href="https://mohdhashir.vercel.app"><img src="./cards/build.svg" width="33.333%" alt="DEFENSE: 100% Zero-Trust" /></a><a href="https://mohdhashir.vercel.app"><img src="./cards/brand.svg" width="33.333%" alt="CERTS: 2 Cisco Certs" /></a><a href="https://mohdhashir.vercel.app"><img src="./cards/learn.svg" width="33.333%" alt="PACKETS: 24/7 Monitoring" /></a><br>
+<img src="./cards/build.svg" width="33.333%" alt="DEFENSE: 100% Zero-Trust" /><img src="./cards/brand.svg" width="33.333%" alt="CERTS: 2 Cisco Certs" /><img src="./cards/learn.svg" width="33.333%" alt="PACKETS: 24/7 Monitoring" /><br>
 <picture><source media="(prefers-color-scheme: dark)" srcset="./cards/title-coding-dark.svg" /><img src="./cards/title-coding-light.svg" width="100%" alt="What I'm coding" /></picture><br>
 <a href="https://github.com/GOD-SP3LL/portifolio"><img src="./cards/repo-portifolio.svg" width="33.333%" alt="portifolio" /></a><a href="https://github.com/GOD-SP3LL/relay"><img src="./cards/repo-relay.svg" width="33.333%" alt="relay" /></a><a href="https://github.com/GOD-SP3LL/azan-reminder"><img src="./cards/repo-azan-reminder.svg" width="33.333%" alt="azan-reminder" /></a>
 </div>
