@@ -298,8 +298,8 @@ def activity(data):
 REPO_W, REPO_H = 880 / 3 - 8, 176
 REPOS = [
     ("portifolio", "Interactive personal portfolio site with responsive layout, dynamic project highlights, and sleek design.", "JavaScript", TECH, "live"),
-    ("enterprise-ipsec-vpn", "Hub-and-spoke multi-site VPN architecture with automated failover, IKEv2, and Palo Alto NGFW security.", "Network", STUDIO, "live"),
-    ("bgp-route-optimizer", "BGP route filtering matrix, prefix-list optimization, and automated failover path switching.", "Security", LEARN, "live"),
+    ("relay", "Fast peer-to-peer local file transfer Android app. Zero-server LAN discovery, TLS streaming, and LocalSend v2.2.", "Kotlin", STUDIO, "live"),
+    ("azan-reminder", "Astronomical prayer calculation engine with Jean Meeus solar algorithms, Qibla azimuth, and home widgets.", "Kotlin", LEARN, "live"),
 ]
 
 
