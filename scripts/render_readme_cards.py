@@ -140,17 +140,7 @@ def text_lines(x, y, lines, lh, attrs):
 
 # 1. HERO
 def hero():
-    h = 420
-    src = open(PORTRAIT).read()
-    rows = re.findall(r'<text xml:space="preserve"[^>]*\by="([\d.]+)"[^>]*>(.*?)</text>', src, re.S)
-    portrait = []
-    for i, (y, txt) in enumerate(rows):
-        portrait.append(
-            f'<text class="f" style="animation-delay:{0.25 + i * 0.018:.3f}s;animation-duration:.35s" '
-            f'xml:space="preserve" x="20" y="{y}" fill="{INK}" font-size="7.2" '
-            f'textLength="800" lengthAdjust="spacing">{txt}</text>'
-        )
-    s = 0.41
+    h = 380
     body = f"""
 <defs>
   <linearGradient id="shine" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="600" y2="0">
@@ -163,24 +153,25 @@ def hero():
 </defs>
 <rect width="{W}" height="{h}" rx="14" fill="{PAPER}"/>
 <g class="f" {d(0)}>
-  <rect class="live" x="48" y="49" width="8" height="8" rx="2" fill="{TECH}"/>
-  <text x="66" y="57" font-family="{MONO}" font-size="12" letter-spacing="1" fill="{MUTED}">ASPIRING NETWORK SECURITY ENGINEER</text>
+  <rect class="live" x="48" y="44" width="8" height="8" rx="2" fill="{TECH}"/>
+  <text x="66" y="52" font-family="{MONO}" font-size="12" letter-spacing="1" fill="{MUTED}">ASPIRING NETWORK SECURITY ENGINEER</text>
+  <text x="{W - 48}" y="52" text-anchor="end" font-family="{MONO}" font-size="12" letter-spacing="1" fill="{MUTED}">ZERO-TRUST · BENGALURU</text>
 </g>
-<text class="r" {d(0.15)} x="44" y="190" font-family="{SERIF}" font-size="116" letter-spacing="-2.5" fill="{INK}">Mohammad</text>
-<text class="r" {d(0.3)} x="44" y="290" font-family="{SERIF}" font-style="italic" font-size="116" letter-spacing="-2.5" fill="url(#shine)">Hashir</text>
-<g class="r" {d(0.55)}>
-  {text_lines(48, 338, ["Securing networks, engineering zero-trust architectures,", "and building resilient defense-in-depth systems."], 27, f'font-family="{SANS}" font-size="18" fill="{INK_SOFT}"')}
+<text class="r" {d(0.15)} x="44" y="165" font-family="{SERIF}" font-size="116" letter-spacing="-2.5" fill="{INK}">Mohammad</text>
+<text class="r" {d(0.3)} x="44" y="262" font-family="{SERIF}" font-style="italic" font-size="116" letter-spacing="-2.5" fill="url(#shine)">Hashir</text>
+<g class="r" {d(0.50)}>
+  <text x="48" y="304" font-family="{SANS}" font-size="18" fill="{INK_SOFT}">Securing enterprise networks, engineering zero-trust architectures,</text>
+  <text x="48" y="328" font-family="{SANS}" font-size="18" fill="{INK_SOFT}">and building resilient defense-in-depth systems.</text>
 </g>
-<g class="f" {d(0.8)}>
-  <text x="48" y="396" font-family="{MONO}" font-size="13" fill="{INK}">mohdhashir.vercel.app</text>
-  <text class="nu" x="210" y="396" font-family="{MONO}" font-size="13" fill="{TECH}">&#8599;</text>
-</g>
-<g transform="translate(520 46) scale({s}) translate(-20 -37)" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">
-  {''.join(portrait)}
+<g class="f" {d(0.75)}>
+  <text x="48" y="358" font-family="{MONO}" font-size="13" fill="{INK}">mohdhashir.vercel.app</text>
+  <text class="nu" x="210" y="358" font-family="{MONO}" font-size="13" fill="{TECH}">&#8599;</text>
+  <text x="240" y="358" font-family="{MONO}" font-size="13" fill="#8e8e93">·</text>
+  <text x="256" y="358" font-family="{MONO}" font-size="13" fill="{MUTED}">Cisco CCNA (200-301)  ·  CCNP Security  ·  Palo Alto NGFW  ·  Wireshark DPI</text>
 </g>
 """
     write("hero.svg", svg(W, h, body, ["serif", "serif-i", "sans", "mono"],
-                          "Mohammad Hashir. Aspiring Network Security Engineer. Securing networks, engineering zero-trust architectures, and building resilient defense-in-depth systems."))
+                          "Mohammad Hashir. Aspiring Network Security Engineer. Securing enterprise networks, engineering zero-trust architectures, and building resilient defense-in-depth systems."))
 
 
 # 2. WORLD TILES
